@@ -1,61 +1,81 @@
-# `TuneBook`
+# Tunebook
 
-Welcome to your new `TuneBook` project and to the Internet Computer development community. By default, creating a new project adds this README and some template files to your project directory. You can edit these template files to customize your project and to include your own code to speed up the development cycle.
+Team Members:
+Robert Ripley - Founder
+Gurleen K Dhaliwal - Software Engineer
 
-To get started, you might want to explore the project directory structure and the default configuration file. Working with this project in your development environment will not affect any production deployment or identity tokens.
+## Overview
 
-To learn more before you start working with `TuneBook`, see the following documentation available online:
+`TuneBook` is a modern decentralized platform for musicians and music enthusiasts to create, manage, and share musical sessions with the community. It leverages the **Internet Computer** to provide a scalable, secure, and serverless backend using **Rust canisters**. Users can create sessions, provide contact details, add descriptions, and set the recurrence of sessions, whether they be weekly, biweekly, or monthly. The app also features map integration for geolocation, allowing users to easily find musical events near them.
 
-- [Quick Start](https://internetcomputer.org/docs/current/developer-docs/setup/deploy-locally)
-- [SDK Developer Tools](https://internetcomputer.org/docs/current/developer-docs/setup/install)
-- [Rust Canister Development Guide](https://internetcomputer.org/docs/current/developer-docs/backend/rust/)
-- [ic-cdk](https://docs.rs/ic-cdk)
-- [ic-cdk-macros](https://docs.rs/ic-cdk-macros)
-- [Candid Introduction](https://internetcomputer.org/docs/current/developer-docs/backend/candid/)
+## Features
 
-If you want to start working on your project right away, you might want to try the following commands:
+- **Create Musical Sessions**: Users can create new musical sessions, providing details like location, contact information, and recurring schedules.
+- **Browse Sessions**: Users can search for and filter through various musical sessions, using parameters like location or event name.
+- **Map Integration**: Uses **Leaflet.js** for map-based visualization of session locations, providing an interactive user experience.
+- **Recurrence Options**: Set the frequency of sessions (e.g., Weekly, Biweekly, Monthly).
+- **User Authentication**: Leverages the Internet Computer’s identity service to authenticate users and link sessions to their identity.
+
+## Infrastructure Overview
+
+`TuneBook` is built on the Internet Computer (IC) using a variety of tools and libraries that power the backend, frontend, and infrastructure:
+
+### Backend: Internet Computer and Canisters
+
+- **Internet Computer**: The app is hosted on the Internet Computer (IC), which provides serverless, scalable, and secure infrastructure. The IC allows TuneBook to function without traditional cloud services.
+- **Rust Canisters**: The core backend logic is written in **Rust**, packaged as **canisters** (smart contracts) that handle session creation, user authentication, and data storage. Canisters are designed to be secure and performant, running directly on the IC.
+- **Candid**: The app uses **Candid** (an interface definition language) for defining and interacting with the canister APIs, enabling smooth communication between the frontend and backend.
+
+### Frontend: React.js with Internet Computer SDK
+
+- **React.js**: The frontend is built with **React**, providing a responsive and modern interface for users to interact with the platform.
+- **Leaflet.js**: Used for map-based session visualization, Leaflet provides a highly interactive experience with map markers for session locations.
+- **React Select**: For the session creation process, users can select recurring options (N/A, Weekly, Biweekly, Monthly) from a dropdown menu implemented with **React Select**.
+- **IC Agent & SDK**: The frontend communicates with the canisters on the Internet Computer through the **IC agent** and the IC development SDK. This enables calls to the backend for fetching and managing session data.
+- **Identity Management**: User authentication is handled by the Internet Computer's identity management system, allowing secure and decentralized login.
+
+
+## Getting Started
+
+To work with `TunbBook`, ensure you have the Internet Computer SDK (`dfx`) installed. Here’s how you can get started:
+
+### Local Development
+
+1. Clone the repository:
+
+    ```bash
+    git clone https://github.com/your-username/tunebook.git
+    cd TuneBook
+    ```
+
+2. Start the Internet Computer local environment:
+
+    ```bash
+    dfx start --background
+    ```
+
+3. Deploy the canisters:
+
+    ```bash
+    dfx deploy
+    ```
+
+4. Generate the Candid interface:
+
+    ```bash
+    npm run generate
+    ```
+
+5. Start the frontend development server:
+
+    ```bash
+    npm start
+    ```
+
+### Running on the Internet Computer (IC)
+
+To deploy `TuneBook` on the public Internet Computer network (IC), use the following command:
 
 ```bash
-cd TuneBook/
-dfx help
-dfx canister --help
-```
+dfx deploy --network ic
 
-## Running the project locally
-
-If you want to test your project locally, you can use the following commands:
-
-```bash
-# Starts the replica, running in the background
-dfx start --background
-
-# Deploys your canisters to the replica and generates your candid interface
-dfx deploy
-```
-
-Once the job completes, your application will be available at `http://localhost:4943?canisterId={asset_canister_id}`.
-
-If you have made changes to your backend canister, you can generate a new candid interface with
-
-```bash
-npm run generate
-```
-
-at any time. This is recommended before starting the frontend development server, and will be run automatically any time you run `dfx deploy`.
-
-If you are making frontend changes, you can start a development server with
-
-```bash
-npm start
-```
-
-Which will start a server at `http://localhost:8080`, proxying API requests to the replica at port 4943.
-
-### Note on frontend environment variables
-
-If you are hosting frontend code somewhere without using DFX, you may need to make one of the following adjustments to ensure your project does not fetch the root key in production:
-
-- set`DFX_NETWORK` to `ic` if you are using Webpack
-- use your own preferred method to replace `process.env.DFX_NETWORK` in the autogenerated declarations
-  - Setting `canisters -> {asset_canister_id} -> declarations -> env_override to a string` in `dfx.json` will replace `process.env.DFX_NETWORK` with the string in the autogenerated declarations
-- Write your own `createActor` constructor
