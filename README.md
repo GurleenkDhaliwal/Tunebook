@@ -1,8 +1,8 @@
 # Tunebook
 
-Team Members:
-Robert Ripley - Founder
-Gurleen K Dhaliwal - Software Engineer
+# Team Members:
+- Robert Ripley - Founder
+- Gurleen K Dhaliwal - Software Engineer
 
 ## Overview
 
@@ -44,7 +44,7 @@ To work with `TunbBook`, ensure you have the Internet Computer SDK (`dfx`) insta
 1. Clone the repository:
 
     ```bash
-    git clone https://github.com/your-username/tunebook.git
+    git clone https://github.com/GurleenkDhaliwal/tunebook.git
     cd TuneBook
     ```
 
@@ -78,4 +78,5 @@ To deploy `TuneBook` on the public Internet Computer network (IC), use the follo
 
 ```bash
 dfx deploy --network ic
+
 
